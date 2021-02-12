@@ -32,8 +32,6 @@ export default function AssetDetails() {
             })
     }, [])
 
-    useEffect(() => {console.log(profileContext.length > 0 ? profileContext.filter(i => i.rel == 'assets') : '')})
-
     return (
         <>
             <Grid container>
