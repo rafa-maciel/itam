@@ -6,21 +6,27 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import AssetDetails from './components/AssetDetails/index.jsx';
 import AssetTable from './components/AssetTable/index.jsx';
 
-export const TemplateProfileContext = React.createContext({})
+export const DomainSchemasContext = React.createContext({})
+const domainSchemasUrl = 'http://localhost:8080/api/profile/'
  
 const App = () => {
-    const [templateProfiles, setTemplateProfiles] = useState({})
+    const [domainSchemas, setDomainSchemas] = useState({})
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/profile/', {headers: {Accept: 'application/schema+json'}})
+        axios.get(domainSchemasUrl, {headers: {Accept: 'application/schema+json'}})
             .then(response => response.data.links)
             .then(links => {
-                setTemplateProfiles(links)   
+                axios.all(links.filter(item => item.rel != 'self').map(url => axios.get(url.href, {headers: {Accept: 'application/schema+json'}})))
+                    .then(axios.spread((...responses) => {
+                        let schemas = {}
+                        responses.map(resp => resp.data).forEach(data => {schemas[data.title.replace(/\s+/g, '').toLowerCase()] = data.properties})
+                        setDomainSchemas(schemas)
+                    }))
             })
     }, [])
 
     return (
-        <TemplateProfileContext.Provider value={templateProfiles}>
+        <DomainSchemasContext.Provider value={domainSchemas}>
             <Router >
                 <Switch>
                     <Route path="/" exact={true}>
@@ -28,7 +34,7 @@ const App = () => {
                     </Route>
                 </Switch>
             </Router>
-        </TemplateProfileContext.Provider>
+        </DomainSchemasContext.Provider>
     )
 }
 

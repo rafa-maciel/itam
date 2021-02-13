@@ -1,7 +1,6 @@
 import { Grid, Typography } from '@material-ui/core'
-import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
-import { TemplateProfileContext } from '../../app'
+import { DomainSchemasContext } from '../../app'
 
 function AssetField({fieldName, fieldValue}) {
     return (
@@ -15,29 +14,49 @@ function AssetField({fieldName, fieldValue}) {
 }
 
 export default function AssetDetails() {
-    const [asset, setAsset] = useState([])
-    const profileContext = useContext(TemplateProfileContext)
+    const domainSchemasContext = useContext(DomainSchemasContext)
+
+    const [assetFields, setAssetFields] = useState([])
+    const [modelFields, setModelFields] = useState([])
+    const [locationFields, setLocationFields] = useState([])
+    const [ownerFields, setOwnerFields] = useState([])
  
+    function getAssetFieldFromShema(schema) {
+        let fields = Object.entries(schema)
+        let fieldComponents = fields.filter(field => field[1].format != 'uri').map((field, index) => {
+            return (
+                <AssetField key={index} fieldName={field[1].title} fieldValue='Field Value' />    
+            )
+        })
+
+        return fieldComponents
+    }
+
     useEffect(() => {
-        axios.get('http://localhost:8080/api/profile/assets', {headers: {Accept: 'application/schema+json'}})
-            .then(response => response.data.properties)
-            .then(fields => {
-                console.log()
-                let inputs = Object.entries(fields).filter(field => field[1].format != 'uri').map((field, index) => {
-                    return (
-                        <AssetField key={index} fieldName={field[1].title} fieldValue='Field Value' />    
-                    )
-                })
-                setAsset(inputs)
-            })
-    }, [])
+        if ("asset" in domainSchemasContext) setAssetFields([...assetFields, ...getAssetFieldFromShema(domainSchemasContext.asset)])
+        if ("devicemodel" in domainSchemasContext) setModelFields([...modelFields, ...getAssetFieldFromShema(domainSchemasContext.devicemodel)])
+        if ("location" in domainSchemasContext) setLocationFields([...locationFields, ...getAssetFieldFromShema(domainSchemasContext.location)])
+        if ("user" in domainSchemasContext) setOwnerFields([...ownerFields, ...getAssetFieldFromShema(domainSchemasContext.user)])
+    }, [domainSchemasContext])
 
     return (
         <>
             <Grid container>
                 <Typography variant="h4" component="h1">Asset Details</Typography>
                 <Grid container spacing={2}>
-                    {asset}
+                    {assetFields}
+                </Grid>
+                <Typography variant="h5">Asset Model</Typography>
+                <Grid container spacing={2}>
+                    {modelFields}
+                </Grid>
+                <Typography variant="h5">Location</Typography>
+                <Grid container spacing={2}>
+                    {locationFields}
+                </Grid>
+                <Typography variant="h5">Onwer</Typography>
+                <Grid container spacing={2}>
+                    {ownerFields}
                 </Grid>
             </Grid>
         </>
