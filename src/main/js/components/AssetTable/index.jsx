@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import AssetService from '../../services/AssetService'
-import { Link, Table, TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow } from '@material-ui/core'
+import { Table, TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow } from '@material-ui/core'
 import './style.css';
+import { Link } from 'react-router-dom';
 
 function AssetTableRow({serialNumber, name, type, model, owner, location, link}) {
     return (
         <TableRow>
-            <TableCell><Link href={link}>{serialNumber}</Link></TableCell>
+            <TableCell>
+                <Link 
+                    to={{
+                        pathname: "/assets/" + serialNumber,
+                        state: { assetURL: link }
+                    }}>
+                        {serialNumber}
+                </Link>
+            </TableCell>
             <TableCell>{name}</TableCell>
             <TableCell>{type}</TableCell>
             <TableCell>{model}</TableCell>

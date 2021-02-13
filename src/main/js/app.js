@@ -30,6 +30,9 @@ const App = () => {
             <Router >
                 <Switch>
                     <Route path="/" exact={true}>
+                        <AssetTable />
+                    </Route>
+                    <Route path="/assets/:serialNumber">
                         <AssetDetails />
                     </Route>
                 </Switch>
