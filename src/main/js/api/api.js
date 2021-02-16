@@ -10,3 +10,13 @@ export function getURLFromRel(rel) {
             return url
         })
 }
+
+export function apiNav(url) {
+    return axios.get(url)
+        .then(response =>  response.data)
+}
+
+export function apiPost(url, data) {
+    url = url.split('{')[0]
+    return axios.post(url, data, {headers:{Accept: 'application/json'}})
+}

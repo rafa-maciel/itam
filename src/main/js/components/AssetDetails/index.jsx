@@ -1,8 +1,8 @@
 import { Grid, Typography } from '@material-ui/core'
 import axios from 'axios'
-import React, { useContext, useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
-import { DomainSchemasContext } from '../../app'
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+// import { DomainSchemasContext } from '../../app'
 
 function AssetField({fieldName, fieldValue}) {
     return (
@@ -16,8 +16,8 @@ function AssetField({fieldName, fieldValue}) {
 }
 
 export default function AssetDetails() {
-    const domainSchemasContext = useContext(DomainSchemasContext)
-    const {serialNumber} = useParams();
+    // const domainSchemasContext = useContext(DomainSchemasContext)
+
     const { state: {assetURL}} = useLocation();
 
     const [assetFields, setAssetFields] = useState([])
@@ -26,23 +26,23 @@ export default function AssetDetails() {
     const [ownerFields, setOwnerFields] = useState([])
 
  
-    function getAssetFieldFromShema(schema) {
-        let fields = Object.entries(schema)
-        let fieldComponents = fields.filter(field => field[1].format != 'uri').map((field, index) => {
-            return (
-                <AssetField key={index} fieldName={field[1].title} fieldValue='Field Value' />    
-            )
-        })
+    // function getAssetFieldFromShema(schema) {
+    //     let fields = Object.entries(schema)
+    //     let fieldComponents = fields.filter(field => field[1].format != 'uri').map((field, index) => {
+    //         return (
+    //             <AssetField key={index} fieldName={field[1].title} fieldValue='Field Value' />    
+    //         )
+    //     })
 
-        return fieldComponents
-    }
+    //     return fieldComponents
+    // }
 
-    useEffect(() => {
-        // if ("asset" in domainSchemasContext) setAssetFields([...assetFields, ...getAssetFieldFromShema(domainSchemasContext.asset)])
-        // if ("devicemodel" in domainSchemasContext) setModelFields([...modelFields, ...getAssetFieldFromShema(domainSchemasContext.devicemodel)])
-        // if ("location" in domainSchemasContext) setLocationFields([...locationFields, ...getAssetFieldFromShema(domainSchemasContext.location)])
-        // if ("user" in domainSchemasContext) setOwnerFields([...ownerFields, ...getAssetFieldFromShema(domainSchemasContext.user)])
-    }, [domainSchemasContext])
+    // useEffect(() => {
+    //     // if ("asset" in domainSchemasContext) setAssetFields([...assetFields, ...getAssetFieldFromShema(domainSchemasContext.asset)])
+    //     // if ("devicemodel" in domainSchemasContext) setModelFields([...modelFields, ...getAssetFieldFromShema(domainSchemasContext.devicemodel)])
+    //     // if ("location" in domainSchemasContext) setLocationFields([...locationFields, ...getAssetFieldFromShema(domainSchemasContext.location)])
+    //     // if ("user" in domainSchemasContext) setOwnerFields([...ownerFields, ...getAssetFieldFromShema(domainSchemasContext.user)])
+    // }, [domainSchemasContext])
 
     useEffect(()=>{
         function getFieldsFromJSON(data) {

@@ -73,6 +73,7 @@ export default function AssetTable() {
 
     return (
         <>
+            <Link to="/assets/new">Create</Link>
             <Table size="small" aria-label="a dense table" className='asset-table'>
                 <TableHead>
                     <TableRow>

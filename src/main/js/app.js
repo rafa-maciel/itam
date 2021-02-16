@@ -4,13 +4,18 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import AssetDetails from './components/AssetDetails/index.jsx';
+import AssetForm from './components/AssetForm/index.jsx';
 import AssetTable from './components/AssetTable/index.jsx';
 
 export const DomainSchemasContext = React.createContext({})
+export const APIUrlsContext = React.createContext({})
+
 const domainSchemasUrl = 'http://localhost:8080/api/profile/'
+const apiRootUrl = 'http://localhost:8080/api/'
  
 const App = () => {
     const [domainSchemas, setDomainSchemas] = useState({})
+    const [apiUrls, setApiUrls] = useState({})
 
     useEffect(() => {
         axios.get(domainSchemasUrl, {headers: {Accept: 'application/schema+json'}})
@@ -25,18 +30,30 @@ const App = () => {
             })
     }, [])
 
+    useEffect(() => {
+        axios.get(apiRootUrl)
+            .then(response => response.data._links)
+            .then(links => setApiUrls(links))
+    }, [])
+
     return (
         <DomainSchemasContext.Provider value={domainSchemas}>
-            <Router >
-                <Switch>
-                    <Route path="/" exact={true}>
-                        <AssetTable />
-                    </Route>
-                    <Route path="/assets/:serialNumber">
-                        <AssetDetails />
-                    </Route>
-                </Switch>
-            </Router>
+            <APIUrlsContext.Provider value={apiUrls}>
+                <Router >
+                    <Switch>
+                        <Route path="/tempof" exact={true}>
+                            <AssetTable />
+                        </Route>
+                        <Route path="/">
+                            <AssetForm />
+                        </Route>
+                        <Route path="/assets/:serialNumber">
+                            <AssetDetails />
+                        </Route>
+                        
+                    </Switch>
+                </Router>
+            </APIUrlsContext.Provider>
         </DomainSchemasContext.Provider>
     )
 }
