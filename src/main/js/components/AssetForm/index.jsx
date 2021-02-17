@@ -1,58 +1,11 @@
-import { Button, FormControlLabel, Grid, MenuItem, Switch, TextField, Typography } from '@material-ui/core'
-import { Autocomplete } from '@material-ui/lab';
 import React, { useContext, useEffect, useState } from 'react'
+
+import { Button, Grid, Typography } from '@material-ui/core'
 import { apiNav, apiPost } from '../../api/api';
 import { APIUrlsContext, DomainSchemasContext } from '../../app'
+import { AutoCompleteFormField, FormField, SwitchField } from '../utils/forms/index.jsx';
 
 import './style.css';
-
-function FormField({id, name, label, onChange, inputProps}) {
-    return (
-        <Grid item xs={12} md={6}>
-            <TextField 
-                id={id}
-                label={label}
-                select={inputProps && inputProps.select ? true : false}
-                type={inputProps && inputProps.number ? 'number' : 'text'}
-                fullWidth
-                name={name} 
-                onChange={onChange}
-                helperText={label}>
-                    {inputProps && inputProps.select && inputProps.selectItems ? inputProps.selectItems.map((item) => (
-                        <MenuItem key={item} value={item}>{item}</MenuItem>
-                    )) : ''}
-            </TextField>
-        </Grid>
-    )
-}
-
-function SwitchField({name, label, onChange}) {
-    return (
-        <Grid item xs={12} md={6}>
-            <FormControlLabel
-                control={<Switch name={name} color="primary" onChange={onChange}/>}
-                label={label}
-                labelPlacement="start"
-            />
-        </Grid>
-    )
-}
-
-function AutoCompleteFormField({id, label, onChange, options}) {
-    return (
-        <>
-            <Grid item xs={12} md={6}>
-                <Autocomplete
-                    id={id}
-                    options={options}
-                    getOptionLabel={(option) => option.label}
-                    onChange={onChange}
-                    renderInput={(params) => <TextField {...params} label={label} />}
-                    />
-            </Grid>
-        </>
-    )
-}
 
 export default function AssetForm() {
     const {asset:assetSchema} = useContext(DomainSchemasContext)
@@ -204,7 +157,7 @@ export default function AssetForm() {
 
     return (
         <>
-            <Typography variant="h3" component="h1">Create new Asset</Typography>
+            <Typography variant="h3" component="h1">Create</Typography>
             <form onSubmit={submitHandler}>
                 <Grid container spacing={3}>
                     {assetFields}

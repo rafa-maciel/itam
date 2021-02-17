@@ -8,6 +8,13 @@ public class ItamController {
     
     @RequestMapping("/")
     public String index() {
+        return "redirect:/app";
+    }
+
+    @RequestMapping(value = {"/app*", "/app/**"})
+    public String app() {
         return "index";
     }
+
+
 }

@@ -41,13 +41,13 @@ const App = () => {
             <APIUrlsContext.Provider value={apiUrls}>
                 <Router >
                     <Switch>
-                        <Route path="/tempof" exact={true}>
+                        <Route path="/app" exact={true}>
                             <AssetTable />
                         </Route>
-                        <Route path="/">
+                        <Route path="/app/assets/add">
                             <AssetForm />
                         </Route>
-                        <Route path="/assets/:serialNumber">
+                        <Route path="/app/assets/:serialNumber">
                             <AssetDetails />
                         </Route>
                         

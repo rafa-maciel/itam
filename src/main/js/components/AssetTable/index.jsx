@@ -10,7 +10,7 @@ function AssetTableRow({serialNumber, name, type, model, owner, location, link})
             <TableCell>
                 <Link 
                     to={{
-                        pathname: "/assets/" + serialNumber,
+                        pathname: "/app/assets/" + serialNumber,
                         state: { assetURL: link }
                     }}>
                         {serialNumber}
@@ -73,7 +73,7 @@ export default function AssetTable() {
 
     return (
         <>
-            <Link to="/assets/new">Create</Link>
+            <Link to="/app/assets/add">Create</Link>
             <Table size="small" aria-label="a dense table" className='asset-table'>
                 <TableHead>
                     <TableRow>
