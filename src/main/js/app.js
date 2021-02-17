@@ -3,9 +3,7 @@ const ReactDOM = require('react-dom');
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import AssetDetails from './components/AssetDetails/index.jsx';
-import AssetForm from './components/AssetForm/index.jsx';
-import AssetTable from './components/AssetTable/index.jsx';
+import { AssetCreate, AssetDetails, AssetTable } from './components/assets';
 
 export const DomainSchemasContext = React.createContext({})
 export const APIUrlsContext = React.createContext({})
@@ -45,7 +43,7 @@ const App = () => {
                             <AssetTable />
                         </Route>
                         <Route path="/app/assets/add">
-                            <AssetForm />
+                            <AssetCreate />
                         </Route>
                         <Route path="/app/assets/:serialNumber">
                             <AssetDetails />

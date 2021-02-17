@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import AssetService from '../../services/AssetService'
+import AssetService from '../../../services/AssetService'
 import { Table, TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow } from '@material-ui/core'
 import './style.css';
 import { Link } from 'react-router-dom';
