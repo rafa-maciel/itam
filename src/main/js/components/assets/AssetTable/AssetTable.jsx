@@ -21,6 +21,12 @@ function AssetTableRow({serialNumber, name, type, model, owner, location, link})
             <TableCell>{model}</TableCell>
             <TableCell>{owner}</TableCell>
             <TableCell>{location}</TableCell>
+            <TableCell>
+                <Link to={{
+                    pathname: "/app/assets/update/" + serialNumber,
+                    state: { assetURL: link}
+                }}>Update</Link>
+            </TableCell>
         </TableRow>
     )
 }
@@ -83,6 +89,7 @@ export default function AssetTable() {
                         <TableCell>Model</TableCell>
                         <TableCell>Owner</TableCell>
                         <TableCell>Location</TableCell>
+                        <TableCell>Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

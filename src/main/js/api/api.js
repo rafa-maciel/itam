@@ -39,4 +39,4 @@ function apiUpdate(url, values) {
     return axios.put(url, values, apiInputHeaders)
 }
 
-export {apiNav, apiPost, apiUpdate}
+export {apiNav, apiPost, apiUpdate, getURLFromRel}

@@ -8,15 +8,15 @@ import { LocationsAutoComplete } from '../../locations/utils';
 import { UsersAutoComplete } from '../../users/utils';
 
 import './style.css';
-import { FormField, SwitchField } from '../../utils/forms';
+import { FormField, SwitchField, NumberField, SelectField } from '../../utils/forms';
 
-export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel}) {
+export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, initialData}) {
     const {asset:assetSchema} = useContext(DomainSchemasContext)
     const [assetFields, setAssetFields] = useState([])
     const [values, setValues] = useState({})
 
     useEffect(() => {
-        if (assetSchema) {
+        if (assetSchema && JSON.stringify(initialData) !== "{}") {
             let schemaArr = Object.entries(assetSchema)
             let components = schemaArr
                 .filter(schema => schema[1].format != "uri")
@@ -24,34 +24,51 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel}) 
                     
                     if (schema[1].type == "boolean") {
                         return (
-                            <SwitchField key={index} label={schema[1].title} name={schema[0]} onChange={switchChangeHandler} />
+                            <SwitchField 
+                                key={index} 
+                                label={schema[1].title} 
+                                name={schema[0]} 
+                                onChange={switchChangeHandler} 
+                                defaultValue={initialData ? initialData[schema[0]] : false}/>
+                        )
+                    }
+                    
+                    if(schema[1].type == "integer") {
+                        return (
+                            <NumberField 
+                                defaultValue={initialData ? initialData[schema[0]] : 0}
+                                key={index} 
+                                name={schema[0]} 
+                                label={schema[1].title} 
+                                onChange={changeHandler} />
                         )
                     }
 
-                    let inputProps = {}
                     if (schema[1].enum) {
-                        inputProps.select = true
-                        inputProps.selectItems = schema[1].enum
+                        return <SelectField 
+                            defaultValue={initialData ? initialData[schema[0]] : null}
+                            label={schema[1].title}
+                            name={schema[0]} 
+                            onChange={changeHandler}
+                            items={schema[1].enum} />
                     }
 
-                    if(schema[1].type == "integer") {
-                        inputProps.number = true
-                    }
+                    
 
                     return (
                         <FormField 
                             key={index} 
+                            defaultValue={initialData ? initialData[schema[0]] : ''}
                             id={schema[0]} 
                             name={schema[0]} 
                             label={schema[1].title} 
-                            onChange={changeHandler}
-                            inputProps={inputProps} />
+                            onChange={changeHandler}/>
                         )
                     }
                 )
-            setAssetFields([...assetFields, ...components])
+            setAssetFields([...components])
         }
-    }, [assetSchema])
+    }, [assetSchema, initialData])
 
     const changeHandler = e => { 
         let newValues = values
@@ -68,6 +85,7 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel}) 
     const switchChangeHandler = e => {
         let newValues = values
         newValues[e.target.name] = e.target.checked
+        console.log(newValues)
         setValues(newValues)
     }
 

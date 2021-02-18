@@ -22,6 +22,6 @@ export default function AssetCreate() {
     }
 
     return (
-        <AssetForm onFormSubmit={handleFormSubmit} formLabel="Create New Device" submitButtonLabel="Create Device" />
+        <AssetForm onFormSubmit={handleFormSubmit} formLabel="Create New Asset" submitButtonLabel="Create Asset" />
     )
 }
