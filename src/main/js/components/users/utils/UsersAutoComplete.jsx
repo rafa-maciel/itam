@@ -8,16 +8,18 @@ export default function UsersAutoComplete({fieldName, fieldLabel, handleFieldCha
     const [fieldOptions, setFieldOptions] = useState([])
 
     useEffect(() => {
-        apiNav(usersURL.href)
-            .then(data => data._embedded.users)
-            .then(users => users.map(user => {
-                    return {
-                        name: fieldName,
-                        label: user.name, 
-                        department: user.department,
-                        uri: user._links.self.href
-                    }
-            })).then(options => setFieldOptions(options))
+        if(usersURL) {
+            apiNav(usersURL.href)
+                .then(data => data._embedded.users)
+                .then(users => users.map(user => {
+                        return {
+                            name: fieldName,
+                            label: user.name, 
+                            department: user.department,
+                            uri: user._links.self.href
+                        }
+                })).then(options => setFieldOptions(options))
+        }
 
     }, [usersURL])
 

@@ -23,7 +23,9 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel}) 
                 .map((schema, index) => {
                     
                     if (schema[1].type == "boolean") {
-                        return <SwitchField key={index} label={schema[1].title} name={schema[0]} onChange={switchChangeHandler} />
+                        return (
+                            <SwitchField key={index} label={schema[1].title} name={schema[0]} onChange={switchChangeHandler} />
+                        )
                     }
 
                     let inputProps = {}
@@ -78,10 +80,17 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel}) 
             <Typography variant="h3" component="h1">{formLabel}</Typography>
             <form onSubmit={submitHandler}>
                 <Grid container spacing={3}>
-                    {assetFields}
-                    <UsersAutoComplete fieldLabel="Device Owner" fieldName="owner" handleFieldChange={selectChangeHandler} />
-                    <LocationsAutoComplete fieldLabel="Device Location" fieldName="location" handleFieldChange={selectChangeHandler} />
-                    <ModelsAutoComplete fieldLabel="Device Model" fieldName="model" handleFieldChange={selectChangeHandler} />
+                    {assetFields.map((field, index) => <Grid key={index} item xs={12} md={6}>{field}</Grid>)}
+
+                    <Grid item xs={12} md={6}>
+                        <UsersAutoComplete fieldLabel="Device Owner" fieldName="owner" handleFieldChange={selectChangeHandler} />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <LocationsAutoComplete fieldLabel="Device Location" fieldName="location" handleFieldChange={selectChangeHandler} />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <ModelsAutoComplete fieldLabel="Device Model" fieldName="model" handleFieldChange={selectChangeHandler} />
+                    </Grid>
                 </Grid>
                 <Button type="submit">{submitButtonLabel}</Button>
             </form>
