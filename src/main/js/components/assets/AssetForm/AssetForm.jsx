@@ -9,6 +9,7 @@ import { UsersAutoComplete } from '../../users/utils';
 
 import './style.css';
 import { FormField, SwitchField, NumberField, SelectField } from '../../utils/forms';
+import { apiNavMany } from '../../../api/api';
 
 export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, initialData}) {
     const {asset:assetSchema} = useContext(DomainSchemasContext)
@@ -70,6 +71,47 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, i
         }
     }, [assetSchema, initialData])
 
+    // function prepareAssetRelObj(data) {
+    //     return {
+    //         owner: {
+    //             url: data._links.owner.href
+    //         },
+    //         location: {
+    //             url: data._links.location.href 
+    //         },
+    //         model: {
+    //             url: data._links.model.href
+    //         }
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     if (JSON.stringify(initialData) !== "{}") {
+    //         console.log(initialData)
+    //         let assetRel = prepareAssetRelObj(initialData)
+
+    //         let urls = [...Object.keys(assetRel).map(key => assetRel[key].url)]
+
+    //         apiNavMany(urls)
+    //             .then(responses => responses.map(resp => {
+    //                 return {
+    //                 url: resp.config.url,
+    //                 data: resp.data
+    //             }}))
+    //             .then(data => {
+    //                 let arrRel = Object.entries(assetRel)
+
+    //                 data.forEach(item => {
+    //                     let relKey = arrRel.filter(rel => rel[1].url == item.url)[0][0]
+    //                     assetRel[relKey] = {...item.data}
+    //                 })
+
+    //                 initialData = {...initialData, ...assetRel}
+    //                 console.log(initialData)
+    //             })
+    //     }
+    // }, [initialData])
+
     const changeHandler = e => { 
         let newValues = values
         newValues[e.target.name] = e.target.value
@@ -85,7 +127,6 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, i
     const switchChangeHandler = e => {
         let newValues = values
         newValues[e.target.name] = e.target.checked
-        console.log(newValues)
         setValues(newValues)
     }
 
@@ -101,13 +142,17 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, i
                     {assetFields.map((field, index) => <Grid key={index} item xs={12} md={6}>{field}</Grid>)}
 
                     <Grid item xs={12} md={6}>
-                        <UsersAutoComplete fieldLabel="Device Owner" fieldName="owner" handleFieldChange={selectChangeHandler} />
+                        <UsersAutoComplete 
+                            fieldLabel="Device Owner" 
+                            fieldName="owner" 
+                            handleFieldChange={selectChangeHandler} 
+                            userDefault={initialData ? initialData.owner : ''}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <LocationsAutoComplete fieldLabel="Device Location" fieldName="location" handleFieldChange={selectChangeHandler} />
+                        {/* <LocationsAutoComplete fieldLabel="Device Location" fieldName="location" handleFieldChange={selectChangeHandler} /> */}
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <ModelsAutoComplete fieldLabel="Device Model" fieldName="model" handleFieldChange={selectChangeHandler} />
+                        {/* <ModelsAutoComplete fieldLabel="Device Model" fieldName="model" handleFieldChange={selectChangeHandler} /> */}
                     </Grid>
                 </Grid>
                 <Button type="submit">{submitButtonLabel}</Button>

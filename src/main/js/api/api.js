@@ -23,6 +23,15 @@ function getURLFromRel(rel) {
         })
 }
 
+function apiNavMany(urls) {
+    urls = urls.map(url => filterURL(url))
+
+    return axios.all(urls.map(url => axios.get(url)))
+            .then(axios.spread((...responses) => {
+                return responses
+            }))
+}
+
 function apiNav(url) {
     url = filterURL(url)
     return axios.get(url)
@@ -39,4 +48,4 @@ function apiUpdate(url, values) {
     return axios.put(url, values, apiInputHeaders)
 }
 
-export {apiNav, apiPost, apiUpdate, getURLFromRel}
+export {apiNav, apiPost, apiUpdate, getURLFromRel, apiNavMany}

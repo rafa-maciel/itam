@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
-import { apiNav, apiUpdate } from '../../../api/api';
+import { apiNav, apiNavMany, apiUpdate } from '../../../api/api';
 import { AssetForm } from '../';
 
 export default function AssetUpdate() {
@@ -12,7 +12,35 @@ export default function AssetUpdate() {
     useEffect(() => {
         if (assetURL) {
             apiNav(assetURL)
-                .then(asset => {setAssetData(asset)})
+                .then(asset => {
+                    let relurls = Object.keys(asset._links)
+                        .filter(key => key != 'self' && key != 'asset')
+                        .map(key => asset._links[key].href)
+
+                    apiNavMany(relurls)
+                    .then(responses => {
+                        responses.forEach(res => {
+                            switch (res.config.url) {
+                                case asset._links.owner.href:
+                                    asset.owner = res.data
+                                    break;
+
+                                case asset._links.location.href:
+                                    asset.location = res.data
+                                    break;
+
+                                case asset._links.model.href:
+                                    asset.model = res.data
+                                    break;
+                            
+                                default:
+                                    break;
+                            }
+                        })
+                    })
+
+                    setAssetData(asset)
+                })
         }
     }, [assetURL])
 
