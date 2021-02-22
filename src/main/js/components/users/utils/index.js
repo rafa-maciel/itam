@@ -1,3 +1,5 @@
 import UsersAutoComplete from "./UsersAutoComplete.jsx";
+import UsersSelectionControl from "./UsersSelectionControl.jsx";
+import UsersSearch from "./UsersSearch.jsx";
 
-export {UsersAutoComplete}
+export {UsersAutoComplete, UsersSelectionControl, UsersSearch}
