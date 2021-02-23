@@ -1,24 +1,9 @@
+import React from 'react'
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core'
-import React, { useState } from 'react'
-import { useEffect } from 'react'
-import { useContext } from 'react'
-import { apiNav } from '../../../api/api'
-import { APIUrlsContext } from '../../../app'
-
-export default function UsersSearch({handleSelectUser}) {
-    const [users, setUsers] = useState([])
-    const {users:usersURL} = useContext(APIUrlsContext)
-
-    useEffect(() => {
-        if (usersURL) {
-            apiNav(usersURL.href)
-                .then(data => data._embedded.users)
-                .then(userList => setUsers(userList))
-        }
-    }, [])
 
 
-
+export default function UserList({users, handleSelectUser}) {
+    
     return (
         <>
             <Table size="small" aria-label="a dense table" className='user-table'>

@@ -1,12 +1,12 @@
 import React from 'react'
-import { Divider, IconButton, InputBase, Paper, TextField, Typography } from '@material-ui/core'
+import { IconButton, TextField } from '@material-ui/core'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import SearchIcon from '@material-ui/icons/Search';
 import { DialogControl } from '../../utils/controls';
 import { useState } from 'react';
-import {UsersSearch} from './';
+import { UserSearch } from '..';
 
-export default function UsersSelectionControl({name, label, handleValueChange}) {
+export default function UserFindDialog({name, label, handleValueChange}) {
     const [dialogFinderUserOpened, setDialogFinderUserOpened] = useState(false)
     const [user, setUser] = useState({name: '', re: ''})
 
@@ -41,7 +41,7 @@ export default function UsersSelectionControl({name, label, handleValueChange}) 
                     }}>
             </TextField>
             <DialogControl title='Find User' dialogOpen={dialogFinderUserOpened} onCloseAction={() => {setDialogFinderUserOpened(false)}}>
-                <UsersSearch handleSelectUser={handleSelectUser}></UsersSearch>
+                <UserSearch handleSelectUser={handleSelectUser}></UserSearch>
             </DialogControl>
         </>
     )

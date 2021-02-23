@@ -38,6 +38,12 @@ function apiNav(url) {
         .then(response =>  response.data)
 }
 
+function apiNavParam(url, params) {
+    url = filterURL(url)
+    return axios.get(url, {params})
+        .then(response =>  response.data)
+}
+
 function apiPost(url, data) {
     url = filterURL(url)
     return axios.post(url, data, apiInputHeaders)
@@ -48,4 +54,4 @@ function apiUpdate(url, values) {
     return axios.put(url, values, apiInputHeaders)
 }
 
-export {apiNav, apiPost, apiUpdate, getURLFromRel, apiNavMany}
+export {apiNav, apiPost, apiUpdate, getURLFromRel, apiNavMany, apiNavParam}

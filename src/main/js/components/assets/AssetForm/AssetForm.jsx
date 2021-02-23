@@ -5,11 +5,12 @@ import { DomainSchemasContext } from '../../../app'
 
 import { ModelsAutoComplete } from '../../models/utils';
 import { LocationsAutoComplete } from '../../locations/utils';
-import { UsersAutoComplete, UsersSelectionControl } from '../../users/utils';
+import { UsersAutoComplete} from '../../users/utils';
 
 import './style.css';
 import { FormField, SwitchField, NumberField, SelectField } from '../../utils/forms';
 import { apiNavMany } from '../../../api/api';
+import { UserFindDialog } from '../../users';
 
 export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, initialData}) {
     const {asset:assetSchema} = useContext(DomainSchemasContext)
@@ -121,7 +122,6 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, i
     const selectChangeHandler = (name, value) => {
         let newValues = values
         newValues[name] = value
-        console.log(newValues)
         setValues(newValues)
     }
 
@@ -148,7 +148,7 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, i
                             fieldName="owner" 
                             handleFieldChange={selectChangeHandler} 
                             userDefault={initialData ? initialData.owner : ''}/> */}
-                        <UsersSelectionControl name="owner" label="Device Owner" handleValueChange={selectChangeHandler}/>
+                        <UserFindDialog name="owner" label="Device Owner" handleValueChange={selectChangeHandler}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         {/* <LocationsAutoComplete fieldLabel="Device Location" fieldName="location" handleFieldChange={selectChangeHandler} /> */}
