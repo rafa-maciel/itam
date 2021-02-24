@@ -9,7 +9,7 @@ export default function SelectField({label, name, defaultValue, onChange, items}
             fullWidth
             name={name} 
             defaultValue={defaultValue ? defaultValue : items[0]}
-            onChange={onChange}
+            onChange={e => {onChange(e.target.name, e.target.value)}}
             helperText={label}>
                 {items.map((item) => (
                     <MenuItem key={item} value={item}>{item}</MenuItem>

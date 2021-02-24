@@ -9,7 +9,7 @@ export default function FormField({name, label, defaultValue, onChange}) {
             fullWidth
             name={name} 
             defaultValue={defaultValue ? defaultValue : ''}
-            onChange={onChange}
+            onChange={e => {onChange(e.target.name, e.target.value)}}
             helperText={label}>
         </TextField>
     )
