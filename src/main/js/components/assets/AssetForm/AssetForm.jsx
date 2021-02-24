@@ -55,7 +55,7 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, i
                             fieldName="owner" 
                             handleFieldChange={selectChangeHandler} 
                             userDefault={initialData ? initialData.owner : ''}/> */}
-                        <UserFindDialog name="owner" label="Device Owner" handleValueChange={handleInputChange}/>
+                        <UserFindDialog name="owner" label="Device Owner" handleValueChange={handleInputChange} defaultUserUri={initialData && initialData._links ? initialData._links.owner.href : null}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         {/* <LocationsAutoComplete fieldLabel="Device Location" fieldName="location" handleFieldChange={selectChangeHandler} /> */}

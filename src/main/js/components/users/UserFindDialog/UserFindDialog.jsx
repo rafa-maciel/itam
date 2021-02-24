@@ -1,15 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { IconButton, TextField } from '@material-ui/core'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import SearchIcon from '@material-ui/icons/Search';
 import { DialogControl } from '../../utils/controls';
 import { useState } from 'react';
 import { UserSearch, UserCreate } from '..';
+import { apiNav } from '../../../api/api';
 
-export default function UserFindDialog({name, label, handleValueChange}) {
+export default function UserFindDialog({name, label, handleValueChange, defaultUserUri}) {
     const [dialogFinderUserOpened, setDialogFinderUserOpened] = useState(false)
     const [dialogCreateUserOpened, setDialogCreateUserOpened] = useState(false)
     const [user, setUser] = useState({name: '', re: ''})
+
+    useEffect(() => {
+        if(defaultUserUri) {
+            apiNav(defaultUserUri)
+                .then(data => handleSelectUser(data))
+        }
+    }, [defaultUserUri])
 
     const handleSelectUser = userSelected => {
         setDialogFinderUserOpened(false)
