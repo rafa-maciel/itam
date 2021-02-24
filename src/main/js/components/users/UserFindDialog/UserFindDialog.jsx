@@ -4,14 +4,16 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import SearchIcon from '@material-ui/icons/Search';
 import { DialogControl } from '../../utils/controls';
 import { useState } from 'react';
-import { UserSearch } from '..';
+import { UserSearch, UserCreate } from '..';
 
 export default function UserFindDialog({name, label, handleValueChange}) {
     const [dialogFinderUserOpened, setDialogFinderUserOpened] = useState(false)
+    const [dialogCreateUserOpened, setDialogCreateUserOpened] = useState(false)
     const [user, setUser] = useState({name: '', re: ''})
 
     const handleSelectUser = userSelected => {
         setDialogFinderUserOpened(false)
+        setDialogCreateUserOpened(false)
         setUser(userSelected)
         handleValueChange(name, userSelected._links.self.href)
     }
@@ -34,7 +36,7 @@ export default function UserFindDialog({name, label, handleValueChange}) {
                             <IconButton aria-label="search" type="button" onClick={() => {setDialogFinderUserOpened(true)}}>
                                 <SearchIcon />
                             </IconButton>
-                            <IconButton aria-label="create">
+                            <IconButton aria-label="create" type="button" onClick={() => {setDialogCreateUserOpened(true)}}>
                                 <AddCircleOutlineIcon />
                             </IconButton>
                         </>
@@ -42,6 +44,9 @@ export default function UserFindDialog({name, label, handleValueChange}) {
             </TextField>
             <DialogControl title='Find User' dialogOpen={dialogFinderUserOpened} onCloseAction={() => {setDialogFinderUserOpened(false)}}>
                 <UserSearch handleSelectUser={handleSelectUser}></UserSearch>
+            </DialogControl>
+            <DialogControl title='Create User' dialogOpen={dialogCreateUserOpened} onCloseAction={() => {setDialogCreateUserOpened(false)}}>
+                <UserCreate onCreateUser={handleSelectUser} />
             </DialogControl>
         </>
     )
