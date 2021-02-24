@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { UserSearch, UserCreate } from '..';
 import { apiNav } from '../../../api/api';
 
-export default function UserFindDialog({name, label, handleValueChange, defaultUserUri}) {
+export default function UserSelectionDialog({name, label, handleValueChange, defaultUserUri}) {
     const [dialogFinderUserOpened, setDialogFinderUserOpened] = useState(false)
     const [dialogCreateUserOpened, setDialogCreateUserOpened] = useState(false)
     const [user, setUser] = useState({name: '', re: ''})
