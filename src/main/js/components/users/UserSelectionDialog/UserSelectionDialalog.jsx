@@ -34,7 +34,6 @@ export default function UserSelectionDialog({name, label, handleValueChange, def
                 value={user.name}
                 fullWidth
                 name={name} 
-                // defaultValue={defaultValue ? defaultValue : ''}
                 onChange={handleValueChange}
                 helperText={label}
                 InputProps={{

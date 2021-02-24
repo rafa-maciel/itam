@@ -7,6 +7,7 @@ import { SchemaFormField } from '../../utils/forms';
 import { UserFindDialog } from '../../users';
 
 import './style.css';
+import { ModelSelectionDialog } from '../../models';
 
 export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, initialData}) {
     const {asset:assetSchema} = useContext(DomainSchemasContext)
@@ -50,17 +51,21 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, i
                     {assetFields.map((field, index) => <Grid key={index} item xs={12} md={6}>{field}</Grid>)}
 
                     <Grid item xs={12} md={6}>
-                        {/* <UsersAutoComplete 
-                            fieldLabel="Device Owner" 
-                            fieldName="owner" 
-                            handleFieldChange={selectChangeHandler} 
-                            userDefault={initialData ? initialData.owner : ''}/> */}
-                        <UserFindDialog name="owner" label="Device Owner" handleValueChange={handleInputChange} defaultUserUri={initialData && initialData._links ? initialData._links.owner.href : null}/>
+                        <UserFindDialog 
+                            name="owner" 
+                            label="Device Owner" 
+                            handleValueChange={handleInputChange} 
+                            defaultUserUri={initialData && initialData._links ? initialData._links.owner.href : null}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         {/* <LocationsAutoComplete fieldLabel="Device Location" fieldName="location" handleFieldChange={selectChangeHandler} /> */}
                     </Grid>
                     <Grid item xs={12} md={6}>
+                        <ModelSelectionDialog 
+                            defaultModelUri={initialData && initialData._links ? initialData._links.model.href : null} 
+                            name="device"
+                            label="Device Model"
+                            onChange={handleInputChange} />
                         {/* <ModelsAutoComplete fieldLabel="Device Model" fieldName="model" handleFieldChange={selectChangeHandler} /> */}
                     </Grid>
                 </Grid>
