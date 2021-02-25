@@ -8,6 +8,7 @@ import { UserFindDialog } from '../../users';
 
 import './style.css';
 import { ModelSelectionDialog } from '../../models';
+import { LocationSelectionDialog } from '../../locations';
 
 export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, initialData}) {
     const {asset:assetSchema} = useContext(DomainSchemasContext)
@@ -58,7 +59,11 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, i
                             defaultUserUri={initialData && initialData._links ? initialData._links.owner.href : null}/>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        {/* <LocationsAutoComplete fieldLabel="Device Location" fieldName="location" handleFieldChange={selectChangeHandler} /> */}
+                        <LocationSelectionDialog
+                            name="location"
+                            label="Device Location"
+                            onChange={handleInputChange}
+                            defaultLocationUri={initialData && initialData._links ? initialData._links.location.href : null} />
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <ModelSelectionDialog 
@@ -66,7 +71,6 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, i
                             name="device"
                             label="Device Model"
                             onChange={handleInputChange} />
-                        {/* <ModelsAutoComplete fieldLabel="Device Model" fieldName="model" handleFieldChange={selectChangeHandler} /> */}
                     </Grid>
                 </Grid>
                 <Button type="submit">{submitButtonLabel}</Button>
