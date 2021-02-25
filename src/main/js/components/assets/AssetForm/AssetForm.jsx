@@ -68,7 +68,7 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, i
                     <Grid item xs={12} md={6}>
                         <ModelSelectionDialog 
                             defaultModelUri={initialData && initialData._links ? initialData._links.model.href : null} 
-                            name="device"
+                            name="model"
                             label="Device Model"
                             onChange={handleInputChange} />
                     </Grid>

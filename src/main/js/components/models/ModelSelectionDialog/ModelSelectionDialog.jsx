@@ -26,7 +26,7 @@ export default function ModelSelectionDialog({name, label, onChange, defaultMode
         if (createDialogShow) setCreateDialogShow(false)
 
         setModel(deviceModel)
-        onChange(name, deviceModel)        
+        onChange(name, deviceModel._links.self.href)        
     }
 
     return (

@@ -4,7 +4,7 @@ import { apiNav } from '../../../api/api'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import SearchIcon from '@material-ui/icons/Search';
 import { DialogControl } from '../../utils/controls';
-import { LocationSearch } from '..';
+import { LocationCreate, LocationSearch } from '..';
 
 export default function LocationSelectionDialog({name, label, defaultLocationUri, onChange}) {
     const [searchDialogShow, setSearchDialogShow] = useState(false)
@@ -26,7 +26,7 @@ export default function LocationSelectionDialog({name, label, defaultLocationUri
         if (createDialogShow) setCreateDialogShow(false)
 
         setLocation(location)
-        onChange(name, location)
+        onChange(name, location._links.self.href)
     }
 
     return (
@@ -63,7 +63,7 @@ export default function LocationSelectionDialog({name, label, defaultLocationUri
                 dialogOpen={createDialogShow}
                 onCloseAction={() => {setCreateDialogShow(false)}}
                 title="Create Location">
-                    {/* <ModelCreate onCreateUser={handleChangeModel} /> */}
+                    <LocationCreate onCreateLocation={handleChangeLocation} />
             </DialogControl>
         </>
     )
