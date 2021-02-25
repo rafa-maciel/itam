@@ -4,7 +4,8 @@ import { apiNav } from '../../../api/api'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import SearchIcon from '@material-ui/icons/Search';
 import { DialogControl } from '../../utils/controls';
-import { ModelSearch } from '..';
+import { ModelSearch, ModelCreate } from '..';
+
 
 export default function ModelSelectionDialog({name, label, onChange, defaultModelUri}) {
     const [searchDialogShow, setSearchDialogShow] = useState(false)
@@ -57,6 +58,12 @@ export default function ModelSelectionDialog({name, label, onChange, defaultMode
                 onCloseAction={() => {setSearchDialogShow(false)}}
                 title="Find Device Models">
                     <ModelSearch onModelChange={handleChangeModel} />
+            </DialogControl>
+            <DialogControl 
+                dialogOpen={createDialogShow}
+                onCloseAction={() => {setCreateDialogShow(false)}}
+                title="Create Device Model">
+                    <ModelCreate onCreateUser={handleChangeModel} />
             </DialogControl>
         </>
     )
