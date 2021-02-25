@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
-import { UserForm } from '..'
 import { apiPost } from '../../../api/api'
-import { APIUrlsContext } from '../../../app'
+import { APIUrlsContext, DomainSchemasContext } from '../../../app'
+import { SchemaForm } from '../../utils/forms'
 
 export default function UserCreate({onCreateUser}) {
     const {users:usersUrl} = useContext(APIUrlsContext)
+    const {user:userSchema} = useContext(DomainSchemasContext)
 
     const handleFormSubmit = values => {
         if (usersUrl) {
@@ -17,6 +18,6 @@ export default function UserCreate({onCreateUser}) {
     } 
 
     return (
-        <UserForm onSubmit={handleFormSubmit} />
+        <SchemaForm domainSchema={userSchema} onSubmit={handleFormSubmit} />
     )
 }
