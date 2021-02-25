@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button } from '@material-ui/core'
+import { Button, Grid } from '@material-ui/core'
 import { SchemaFormField } from '.'
 
 export default function SchemaForm({domainSchema, onSubmit}) {
@@ -38,7 +38,12 @@ export default function SchemaForm({domainSchema, onSubmit}) {
     return (
         <>
             <form>
-                {formFields}
+                <Grid container spacing={3}>
+                    {formFields.map((field, index) => (
+                        <Grid key={index} item xs={12} md={6}>{field}</Grid>
+                    ))}
+                </Grid>
+                
                 <Button type="button" onClick={handleFormSubmit}>Save</Button>
             </form>
         </>
