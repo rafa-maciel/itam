@@ -17,6 +17,8 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, i
 
     useEffect(() => {
         if (assetSchema && JSON.stringify(initialData) !== "{}") {
+
+
             let schemaArr = Object.entries(assetSchema)
             let components = schemaArr
                 .filter(schema => schema[1].format != "uri")
@@ -33,6 +35,16 @@ export default function AssetForm({onFormSubmit, formLabel, submitButtonLabel, i
             setAssetFields([...components])
         }
     }, [assetSchema, initialData])
+
+    useEffect(() => {
+        if (initialData && JSON.stringify(initialData) !== "{}")  {
+            Object.entries(initialData)
+                .filter(data => data[0] != "_links")
+                .map(data => { return {name: data[0], value: data[1]}})
+                .forEach(data => handleInputChange(data.name, data.value))
+
+        }
+    }, [initialData])
 
     const handleInputChange = (name, value) => {
         let newValues = values

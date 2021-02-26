@@ -20,11 +20,10 @@ export default function AssetUpdate() {
 
     const handleFormSubmit = (e, values) => {
         e.preventDefault()
-        if (values) {
+        if (values && assetURL) {
             apiUpdate(assetURL, values)   
                 .then(response => {
                     if (response.status == 200) {
-                        console.log('asset updated')
                         history.push('/app')
                     } else {
                         alert('There is an error on update asset attempt')
