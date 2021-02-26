@@ -6,10 +6,10 @@ import { useLocation } from 'react-router-dom'
 
 function AssetField({fieldName, fieldValue}) {
     return (
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
             <Grid container>
                 <Grid item xs={4}><strong>{fieldName}</strong></Grid>
-                <Grid item xs={6}>{typeof(fieldValue) == "boolean" ? (fieldValue ? "Yes" : "No") : fieldValue}</Grid>
+                <Grid item xs={8}>{typeof(fieldValue) == "boolean" ? (fieldValue ? "Yes" : "No") : fieldValue}</Grid>
             </Grid>
         </Grid>
     )

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { AssetCreate, AssetDetails, AssetTable, AssetUpdate } from './components/assets';
+import { MainLayout } from './pages';
 
 export const DomainSchemasContext = React.createContext({})
 export const APIUrlsContext = React.createContext({})
@@ -38,21 +39,23 @@ const App = () => {
         <DomainSchemasContext.Provider value={domainSchemas}>
             <APIUrlsContext.Provider value={apiUrls}>
                 <Router >
-                    <Switch>
-                        <Route path="/app" exact={true}>
-                            <AssetTable />
-                        </Route>
-                        <Route path="/app/assets/add">
-                            <AssetCreate />
-                        </Route>
-                        <Route path="/app/assets/update/:serialNumber">
-                            <AssetUpdate />
-                        </Route>
-                        <Route path="/app/assets/:serialNumber">
-                            <AssetDetails />
-                        </Route>
-                        
-                    </Switch>
+                    <MainLayout>    
+                        <Switch>
+                            <Route path="/app" exact={true}>
+                                <AssetTable />
+                            </Route>
+                            <Route path="/app/assets/add">
+                                <AssetCreate />
+                            </Route>
+                            <Route path="/app/assets/update/:serialNumber">
+                                <AssetUpdate />
+                            </Route>
+                            <Route path="/app/assets/:serialNumber">
+                                <AssetDetails />
+                            </Route>
+                            
+                        </Switch>
+                    </MainLayout>
                 </Router>
             </APIUrlsContext.Provider>
         </DomainSchemasContext.Provider>
