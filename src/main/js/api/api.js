@@ -50,8 +50,8 @@ function apiPost(url, data) {
 }
 
 function apiUpdate(url, values) {
-    url = filterURL(ulr)
-    return axios.put(url, values, apiInputHeaders)
+    url = filterURL(url)
+    return axios.patch(url, values, apiInputHeaders)
 }
 
 export {apiNav, apiPost, apiUpdate, getURLFromRel, apiNavMany, apiNavParam}
