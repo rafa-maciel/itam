@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom';
 import { apiPost } from '../../../api/api.js';
 import { APIUrlsContext } from '../../../app.js';
-import { AssetForm } from '../';
+import { AssetForm } from '../../../components/assets/index.js';
 
 export default function AssetCreate() {
     const {assets:assetURL} = useContext(APIUrlsContext)

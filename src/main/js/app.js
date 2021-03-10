@@ -3,9 +3,9 @@ const ReactDOM = require('react-dom');
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import { AssetCreate, AssetDetails, AssetTable, AssetUpdate } from './components/assets';
+import { AssetDetails, AssetTable, AssetUpdate } from './components/assets';
 import { MainLayout } from './pages';
-import { AssetList } from './pages/assets';
+import { AssetCreate, AssetList } from './pages/assets';
 
 export const DomainSchemasContext = React.createContext({})
 export const APIUrlsContext = React.createContext({})
