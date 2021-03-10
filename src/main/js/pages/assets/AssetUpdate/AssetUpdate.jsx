@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { apiNav, apiUpdate } from '../../../api/api';
-import { AssetForm } from '../';
+import { AssetForm } from '../../../components/assets';
 
 export default function AssetUpdate() {
     const history = useHistory()
