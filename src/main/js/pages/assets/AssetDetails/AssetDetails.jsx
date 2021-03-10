@@ -2,7 +2,6 @@ import { Grid, Typography } from '@material-ui/core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-// import { DomainSchemasContext } from '../../app'
 
 function AssetField({fieldName, fieldValue}) {
     return (
@@ -16,7 +15,6 @@ function AssetField({fieldName, fieldValue}) {
 }
 
 export default function AssetDetails() {
-    // const domainSchemasContext = useContext(DomainSchemasContext)
 
     const { state: {assetURL}} = useLocation();
 
