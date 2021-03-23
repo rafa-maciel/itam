@@ -1,9 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Table, TableBody, TableCell, TableFooter, TableHead, TablePagination, TableRow } from '@material-ui/core'
 import './style.css';
-import { AssetRow } from '..';
+import { AssetDelete, AssetRow } from '..';
 
-export default function AssetTable({ assets, page, onPageChange, onRowsSizeChange}) {
+export default function AssetTable({ assets, page, onPageChange, onRowsSizeChange, onChangeList}) {
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+    const [assetSelected, setAssetSelected] = useState({})
+
+    const handleAssetDeleteConfirm = (name, model, owner, link) => {
+        let selectedOption = {
+            name, model, owner, 
+            uri: link
+        }
+        setAssetSelected(selectedOption)
+        setDeleteDialogOpen(true)
+    }
+
+    const onDeleteDialogClosed = (confirm) => {
+        if (confirm) {
+            onChangeList()
+        } 
+
+        setDeleteDialogOpen(false)
+    } 
    
     return (
         <>
@@ -28,7 +47,8 @@ export default function AssetTable({ assets, page, onPageChange, onRowsSizeChang
                             model={asset.model.model}
                             owner={asset.owner.name}
                             location={asset.location.title}
-                            link={asset._links.self.href} /> 
+                            link={asset._links.self.href}
+                            handleAssetDeleteConfirm={handleAssetDeleteConfirm} /> 
                     ))}
                 </TableBody>
                 <TableFooter>
@@ -44,7 +64,10 @@ export default function AssetTable({ assets, page, onPageChange, onRowsSizeChang
                     </TableRow>
                 </TableFooter>
             </Table>
-            
+            <AssetDelete 
+                dialogOpened={deleteDialogOpen} 
+                onCloseDialog={onDeleteDialogClosed}
+                {...assetSelected} />
         </>
     )
 }

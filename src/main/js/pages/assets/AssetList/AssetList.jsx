@@ -27,26 +27,30 @@ export default function AssetList() {
 
     useEffect(() => {
         if (apiUrl) {
-            apiNavParam(apiUrl, { size: pageSize })
-                .then(data => {
-                    let pageAttr = {
-                        size: pageSize,
-                        totalElements: data.page.totalElements,
-                        totalPages: data.page.totalPages,
-                        number: data.page.number,
-                        nextUrl: data._links.next ? data._links.next.href : null,
-                        previousUrl: data._links.prev ? data._links.prev.href : null
-                    }
-
-                    let newPage = page
-                    Object.entries(pageAttr).forEach(attributes => {page[attributes[0]] = attributes[1]})
-
-                    setPage(newPage)
-
-                    return data._embedded.assets
-                }).then(assets => setAssets(assets))
+            listAssets()
         }
     }, [apiUrl, pageSize])
+
+    const listAssets = () => {
+        apiNavParam(apiUrl, { size: pageSize })
+            .then(data => {
+                let pageAttr = {
+                    size: pageSize,
+                    totalElements: data.page.totalElements,
+                    totalPages: data.page.totalPages,
+                    number: data.page.number,
+                    nextUrl: data._links.next ? data._links.next.href : null,
+                    previousUrl: data._links.prev ? data._links.prev.href : null
+                }
+
+                let newPage = page
+                Object.entries(pageAttr).forEach(attributes => {page[attributes[0]] = attributes[1]})
+
+                setPage(newPage)
+
+                return data._embedded.assets
+            }).then(assets => setAssets(assets))
+    }
 
     const handlePageChange = nextPageNumber => {
         let newUrl = nextPageNumber && nextPageNumber >= page.number ? page.nextUrl : page.previousUrl
@@ -62,6 +66,7 @@ export default function AssetList() {
     return (
         <>
             <AssetTable 
+                onChangeList={() =>  listAssets()}
                 assets={assets} 
                 page={page} 
                 onPageChange={handlePageChange}

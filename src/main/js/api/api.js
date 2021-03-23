@@ -54,4 +54,10 @@ function apiUpdate(url, values) {
     return axios.patch(url, values, apiInputHeaders)
 }
 
-export {apiNav, apiPost, apiUpdate, getURLFromRel, apiNavMany, apiNavParam}
+function apiDelete(url) {
+    url = filterURL(url)
+    return axios.delete(url, apiInputHeaders)
+        .then(resp => resp.status == 204)
+}
+
+export {apiNav, apiPost, apiUpdate, getURLFromRel, apiNavMany, apiNavParam, apiDelete}
