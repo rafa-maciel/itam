@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { MainLayout } from './pages';
 import { AssetCreate, AssetList, AssetUpdate, AssetDetails } from './pages/assets';
+import { UserDashboard } from './pages/users';
 
 export const DomainSchemasContext = React.createContext({})
 export const APIUrlsContext = React.createContext({})
@@ -52,6 +53,9 @@ const App = () => {
                             </Route>
                             <Route path="/app/assets/:serialNumber">
                                 <AssetDetails />
+                            </Route>
+                            <Route path="/app/users">
+                                <UserDashboard />
                             </Route>
                             
                         </Switch>
