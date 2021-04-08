@@ -2,11 +2,10 @@ import { Button, Dialog, DialogContent, DialogTitle, Table, TableBody, TableCell
 import React, { useState } from 'react'
 import { UserUpdate } from '../'
 
-const tableHeadersTitles = ['RE', 'Name', 'Job Role', 'Department', 'Actions']
-
 export default function UserTable({ users, onItemsChange }) {
     const [selectedUser, setSelectedUser] = useState({})
     const [updatDialogOpen, setUpdatDialogOpen] = useState(false)
+    const tableHeadersTitles = ['RE', 'Name', 'Job Role', 'Department', 'Actions']
 
     const handleUpdateDialog = user => {
         setSelectedUser(user)
