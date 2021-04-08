@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Grid } from '@material-ui/core'
 import { SchemaFormField } from '.'
 
-export default function SchemaForm({domainSchema, onSubmit}) {
+export default function SchemaForm({ domainSchema, onSubmit, initialData}) {
     const [formFields, setFormFields] = useState([])
     const [values, setValues] = useState({})
 
@@ -15,6 +15,7 @@ export default function SchemaForm({domainSchema, onSubmit}) {
                     <SchemaFormField
                         key={index}
                         name={field.name}
+                        defaultValue={ initialData ? initialData[field.name] : "" }
                         values={field.values}
                         onChange={handleFieldChange} />
                 ))
@@ -22,6 +23,15 @@ export default function SchemaForm({domainSchema, onSubmit}) {
             setFormFields([ ...components ])
         }
     }, [domainSchema])
+
+    useEffect(() => {
+        if( initialData && JSON.stringify(initialData) !== "{}" ) {
+            Object.entries(initialData)
+                .filter(data => data[0] != "_links")
+                .map(data => { return {name: data[0], value: data[1]}})
+                .forEach(data => handleFieldChange(data.name, data.value))
+        }
+    }, [ initialData ])
 
     const handleFieldChange = (name, value) => {
         let newValues = values

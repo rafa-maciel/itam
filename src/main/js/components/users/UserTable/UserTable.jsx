@@ -1,13 +1,19 @@
-import { Button, Checkbox, Dialog, DialogContent, DialogTitle, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core'
+import { Button, Dialog, DialogContent, DialogTitle, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core'
 import React, { useState } from 'react'
+import { UserUpdate } from '../'
 
-export default function UserTable({ users }) {
+export default function UserTable({ users, onItemsChange }) {
     const [selectedUser, setSelectedUser] = useState({})
     const [updatDialogOpen, setUpdatDialogOpen] = useState(false)
 
     const handleUpdateDialog = user => {
         setSelectedUser(user)
         setUpdatDialogOpen(true)
+    }
+
+    const handleUserUpdated = () => {
+        setUpdatDialogOpen(false)
+        onItemsChange()
     }
 
     return (
@@ -50,9 +56,11 @@ export default function UserTable({ users }) {
                 </DialogTitle>
 
                 <DialogContent>
-                    
+                    <UserUpdate 
+                        user={ selectedUser } 
+                        uri={ selectedUser && selectedUser._links ? selectedUser._links.self.href : null }
+                        onUpdate={ handleUserUpdated }/>
                 </DialogContent>
-
             </Dialog>
         </>
     )

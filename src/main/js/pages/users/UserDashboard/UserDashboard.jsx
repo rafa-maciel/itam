@@ -26,7 +26,7 @@ export default function UserDashboard() {
 
     return (
         <>
-            <UserTable users={users} />
+            <UserTable users={users} onItemsChange={findAndListUsers}/>
         </>
     )
 }
