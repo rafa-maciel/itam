@@ -92,6 +92,12 @@ function ResponsiveDrawer(props) {
                 <ListItemText primary="Users Dashboard" />
             </ListItem>
           </Link>
+          <Link to="/app/locations">
+            <ListItem button>
+                <ListItemIcon><ImportantDevicesIcon/></ListItemIcon>
+                <ListItemText primary="Locations Dashboard" />
+            </ListItem>
+          </Link>
       </List>
       <Divider />
     </div>

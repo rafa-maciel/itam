@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { MainLayout } from './pages';
 import { AssetCreate, AssetList, AssetUpdate, AssetDetails } from './pages/assets';
+import { LocationDashboard } from './pages/locations';
 import { UserDashboard } from './pages/users';
 
 export const DomainSchemasContext = React.createContext({})
@@ -56,6 +57,9 @@ const App = () => {
                             </Route>
                             <Route path="/app/users">
                                 <UserDashboard />
+                            </Route>
+                            <Route path="/app/locations">
+                                <LocationDashboard />
                             </Route>
                             
                         </Switch>
