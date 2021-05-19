@@ -2,7 +2,6 @@ package com.rmaciel.itam.itam.assets;
 
 import java.util.List;
 
-import com.rmaciel.itam.itam.Users.User;
 import com.rmaciel.itam.itam.assets.projections.AssetProjection;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
