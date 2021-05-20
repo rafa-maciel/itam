@@ -51,18 +51,21 @@ export default function AssetTable({ assets, page, onPageChange, onRowsSizeChang
                             handleAssetDeleteConfirm={handleAssetDeleteConfirm} /> 
                     ))}
                 </TableBody>
-                <TableFooter>
-                    <TableRow>
-                        <TablePagination 
-                            rowsPerPageOptions={page.rowsPerPageOptions} 
-                            count={page.totalElements}
-                            rowsPerPage={page.size}
-                            page={page.number}
-                            onChangePage={(event, number) => {onPageChange(number)}}
-                            onChangeRowsPerPage={event => {onRowsSizeChange(event.target.value)}}
-                            />
-                    </TableRow>
-                </TableFooter>
+                { page ? (
+                    <TableFooter>
+                        <TableRow>
+                            <TablePagination 
+                                rowsPerPageOptions={page.rowsPerPageOptions} 
+                                count={page.totalElements}
+                                rowsPerPage={page.size}
+                                page={page.number}
+                                onChangePage={(event, number) => {onPageChange(number)}}
+                                onChangeRowsPerPage={event => {onRowsSizeChange(event.target.value)}}
+                                />
+                        </TableRow>
+                    </TableFooter>
+                ) : null}
+                
             </Table>
             <AssetDelete 
                 dialogOpened={deleteDialogOpen} 

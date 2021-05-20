@@ -23,6 +23,12 @@ function getURLFromRel(rel) {
         })
 }
 
+function getURLFromEntitySearch(url, rel) {
+    let searchUrl = filterURL(url) + "/search"
+    return apiNav(searchUrl)
+        .then(data => data._links[rel].href)
+}
+
 function apiNavMany(urls) {
     urls = urls.map(url => filterURL(url))
 
@@ -60,4 +66,4 @@ function apiDelete(url) {
         .then(resp => resp.status == 204)
 }
 
-export {apiNav, apiPost, apiUpdate, getURLFromRel, apiNavMany, apiNavParam, apiDelete}
+export {apiNav, apiPost, apiUpdate, getURLFromRel, apiNavMany, apiNavParam, apiDelete, getURLFromEntitySearch}

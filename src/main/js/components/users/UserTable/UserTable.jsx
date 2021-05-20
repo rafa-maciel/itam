@@ -4,6 +4,7 @@ import { UserCreate, UserDelete, UserUpdate } from '../'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import './style.css'
+import { Link } from 'react-router-dom';
 
 export default function UserTable({ users, onItemsChange }) {
     const [selectedUser, setSelectedUser] = useState({})
@@ -138,7 +139,12 @@ function DeleteUserDialog({ showDialog, user, uri, onDelete, onClose }) {
     )
 }
 
-function UserTableRow({ user, onUpdateCall, onDeleteCall }) {
+function UserTableRow({ user, onUpdateCall, onDeleteCall}) {
+    const detailsParam = {
+        pathname: "/app/users/" + user.re,
+        state: { userURI: user._links.self }
+    }
+
     return (
         <TableRow>
             <TableCell>{ user.re }</TableCell>
@@ -150,11 +156,16 @@ function UserTableRow({ user, onUpdateCall, onDeleteCall }) {
                     type="button" 
                     onClick={() => onUpdateCall(user)}
                     >Update</Button>
-                    |
+                |
                 <Button 
                     type="button" 
                     onClick={() => onDeleteCall(user)}
                     >Remove</Button>
+                |
+                <Link to={{
+                    pathname: "/app/users/" + user.re,
+                    state: { userURI: user._links.self.href}
+                }}> See Details </Link>
             </TableCell>
         </TableRow>
     )

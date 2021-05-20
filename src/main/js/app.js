@@ -7,7 +7,7 @@ import { MainLayout } from './pages';
 import { AssetCreate, AssetList, AssetUpdate, AssetDetails } from './pages/assets';
 import { LocationDashboard } from './pages/locations';
 import { ModelDashboard } from './pages/models';
-import { UserDashboard } from './pages/users';
+import { UserDashboard, UserDetails } from './pages/users';
 
 export const DomainSchemasContext = React.createContext({})
 export const APIUrlsContext = React.createContext({})
@@ -55,6 +55,9 @@ const App = () => {
                             </Route>
                             <Route path="/app/assets/:serialNumber">
                                 <AssetDetails />
+                            </Route>
+                            <Route path="/app/users/:re">
+                                <UserDetails />
                             </Route>
                             <Route path="/app/users">
                                 <UserDashboard />

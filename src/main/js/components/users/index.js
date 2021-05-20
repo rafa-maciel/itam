@@ -5,5 +5,7 @@ import UserCreate from './UserCreate/UserCreate.jsx'
 import UserTable from './UserTable/UserTable.jsx'
 import UserUpdate from './UserUpdate/UserUpdate.jsx'
 import UserDelete from './UserDelete/UserDelete.jsx'
+import UserInfo from './UserInfo/UserInfo.jsx'
 
-export { UserList, UserSearch, UserSelectionDialog as UserFindDialog, UserCreate, UserTable, UserUpdate, UserDelete }
+export { UserList, UserSearch, UserSelectionDialog as UserFindDialog, 
+    UserCreate, UserTable, UserUpdate, UserDelete, UserInfo }
