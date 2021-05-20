@@ -12,5 +12,5 @@ import org.springframework.data.rest.core.annotation.RestResource;
 public interface AssetRepository extends PagingAndSortingRepository<Asset, Long> {
     
     @RestResource(path = "allFromOwner", rel = "allFromOwner")
-    List<Asset> findByOwnerId(Long ownerId);
+    List<Asset> findByOwnerRe(String ownerRe);
 }
