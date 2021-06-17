@@ -1,9 +1,15 @@
 package com.rmaciel.itam.itam.config;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.rmaciel.itam.itam.Locations.Location;
 import com.rmaciel.itam.itam.Locations.LocationRepository;
 import com.rmaciel.itam.itam.Users.User;
 import com.rmaciel.itam.itam.Users.UserRepository;
+import com.rmaciel.itam.itam.accounts.Account;
+import com.rmaciel.itam.itam.accounts.AccountRepository;
+import com.rmaciel.itam.itam.accounts.AccountRole;
 import com.rmaciel.itam.itam.assets.Asset;
 import com.rmaciel.itam.itam.assets.AssetRepository;
 import com.rmaciel.itam.itam.assets.AssetStatus;
@@ -22,15 +28,17 @@ public class DatabaseLoader implements CommandLineRunner {
     private DeviceModelRepository modelRepository;
     private LocationRepository locationRepository;
     private UserRepository userRepository;
+    private AccountRepository accountRepository;
 
     private final Logger log = LoggerFactory.getLogger(DatabaseLoader.class);
 
     public DatabaseLoader(AssetRepository assetRepository, DeviceModelRepository modelRepository,
-            LocationRepository locationRepository, UserRepository userRepository) {
+            LocationRepository locationRepository, UserRepository userRepository, AccountRepository accountRepository) {
         this.assetRepository = assetRepository;
         this.modelRepository = modelRepository;
         this.locationRepository = locationRepository;
         this.userRepository = userRepository;
+        this.accountRepository = accountRepository;
     }
     
     @Override
@@ -72,6 +80,10 @@ public class DatabaseLoader implements CommandLineRunner {
         log.info(assetRepository.save(new Asset("Ultrabook 8470", "Notebook", dell, "847AZ65S", "PN66123123", 66123123, 
             999652, crews, dataCenter, "CT999654", AssetStatus.DISABLED, true, "To be retirement")).toString());
     
+        List<AccountRole> roles = Arrays.asList(AccountRole.ADMIN, AccountRole.IT);
+        log.info(accountRepository.save(new Account("admin@admin.com", 
+            "$2y$12$q/LpNerWzNfuyGss5L4vZ.AFCHeMvUaU76YCKqCsWfUrm6ciD.sWW", 
+            Boolean.TRUE, roles)).toString());
     }
     
 }
