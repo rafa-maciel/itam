@@ -82,7 +82,7 @@ public class DatabaseLoader implements CommandLineRunner {
     
         List<AccountRole> roles = Arrays.asList(AccountRole.ADMIN, AccountRole.IT);
         log.info(accountRepository.save(new Account("admin@admin.com", 
-            "$2y$12$q/LpNerWzNfuyGss5L4vZ.AFCHeMvUaU76YCKqCsWfUrm6ciD.sWW", 
+            "pass123", 
             Boolean.TRUE, roles)).toString());
     }
     

@@ -14,6 +14,7 @@ import javax.persistence.Id;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 public class Account implements UserDetails {
@@ -31,7 +32,7 @@ public class Account implements UserDetails {
 
     public Account(String email, String password, Boolean enabled, List<AccountRole> roles) {
         this.email = email;
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);
         this.enabled = enabled;
         this.roles = roles;
     }
