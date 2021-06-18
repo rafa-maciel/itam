@@ -3,7 +3,8 @@ const ReactDOM = require('react-dom');
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import { MainLayout } from './pages';
+import { apiNav, apiNavSchema } from './api/api';
+import { Authentication, MainLayout } from './pages';
 import { AssetCreate, AssetList, AssetUpdate, AssetDetails } from './pages/assets';
 import { LocationDashboard } from './pages/locations';
 import { ModelDashboard } from './pages/models';
@@ -18,27 +19,42 @@ const apiRootUrl = 'http://localhost:8080/api/'
 const App = () => {
     const [domainSchemas, setDomainSchemas] = useState({})
     const [apiUrls, setApiUrls] = useState({})
+    const [authenticated, setAuthenticated] = useState(false)
 
     useEffect(() => {
-        axios.get(domainSchemasUrl, {headers: {Accept: 'application/schema+json'}})
-            .then(response => response.data.links)
-            .then(links => {
-                axios.all(links.filter(item => item.rel != 'self').map(url => axios.get(url.href, {headers: {Accept: 'application/schema+json'}})))
-                    .then(axios.spread((...responses) => {
-                        let schemas = {}
-                        responses.map(resp => resp.data).forEach(data => {schemas[data.title.replace(/\s+/g, '').toLowerCase()] = data.properties})
-                        setDomainSchemas(schemas)
-                    }))
-            })
-    }, [])
+        let token = localStorage.getItem('ITAM_TOKEN_AUTH')
+        if (!authenticated && token)
+            setAuthenticated(true)
+        if (authenticated && !token)
+            setAuthenticated(false)
+    }, [authenticated])
 
     useEffect(() => {
-        axios.get(apiRootUrl)
-            .then(response => response.data._links)
-            .then(links => setApiUrls(links))
-    }, [])
+        if (authenticated) (
+            apiNavSchema(domainSchemasUrl)
+                .then(response => response.links)
+                .then(links => {
+                    axios.all(links.filter(item => item.rel != 'self').map(url => apiNavSchema(url.href)))
+                        .then(axios.spread((...responses) => {
+                            let schemas = {}
+                            responses.forEach(data => {schemas[data.title.replace(/\s+/g, '').toLowerCase()] = data.properties})
+                            setDomainSchemas(schemas)
+                        }))
+                })
+                .catch(error => {console.log(error)})
+        )
+    }, [authenticated])
 
-    return (
+    useEffect(() => {
+        if (authenticated) (
+            apiNav(apiRootUrl)
+                .then(response => response._links)
+                .then(links => setApiUrls(links))
+        )
+    }, [authenticated])
+
+    const AppHomePage = () => {
+        return (
         <DomainSchemasContext.Provider value={domainSchemas}>
             <APIUrlsContext.Provider value={apiUrls}>
                 <Router >
@@ -74,6 +90,22 @@ const App = () => {
                 </Router>
             </APIUrlsContext.Provider>
         </DomainSchemasContext.Provider>
+        )
+    }
+
+    const AppNonAuthenticatedPage = () => {
+        return <Authentication onSuccessfulyAuthenticated={() => setAuthenticated(true)} />
+    }
+
+    const AppPage = () => {
+        if (authenticated) 
+            return (<AppHomePage />)
+        else
+            return (<AppNonAuthenticatedPage />)
+    }
+
+    return (
+        <AppPage />
     )
 }
 

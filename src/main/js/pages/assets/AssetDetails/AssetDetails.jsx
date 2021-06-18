@@ -2,6 +2,7 @@ import { Grid, Typography } from '@material-ui/core'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { apiNav } from '../../../api/api'
 
 function AssetField({fieldName, fieldValue}) {
     return (
@@ -51,13 +52,12 @@ export default function AssetDetails() {
                         )
         }
 
-        axios.get(assetURL)
-            .then(response => response.data)
+        apiNav(assetURL)
             .then(data => {
                 setAssetFields(getFieldsFromJSON(data))                              
-                axios.get(data._links.location.href).then(response => response.data).then(dataResp => {setLocationFields(getFieldsFromJSON(dataResp))})
-                axios.get(data._links.model.href).then(response => response.data).then(dataResp => {setModelFields(getFieldsFromJSON(dataResp))})
-                axios.get(data._links.owner.href).then(response => response.data).then(dataResp => {setOwnerFields(getFieldsFromJSON(dataResp))})
+                apiNav(data._links.location.href).then(dataResp => {setLocationFields(getFieldsFromJSON(dataResp))})
+                apiNav(data._links.model.href).then(dataResp => {setModelFields(getFieldsFromJSON(dataResp))})
+                apiNav(data._links.owner.href).then(dataResp => {setOwnerFields(getFieldsFromJSON(dataResp))})
             })
     }, [assetURL])
 
